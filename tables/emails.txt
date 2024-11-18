@@ -1,0 +1,12 @@
+CREATE TABLE emails (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id VARCHAR(255),  -- The user_id from the users table
+    recipient VARCHAR(255),
+    subject VARCHAR(255),
+    message TEXT,
+    file_path VARCHAR(255) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_read TINYINT(1) DEFAULT 0,   -- 0 = unread, 1 = read
+    read_at TIMESTAMP NULL,         -- Stores the time when the message was read
+    FOREIGN KEY (sender_id) REFERENCES users(user_id)  -- Define the relationship
+);

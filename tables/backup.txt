@@ -1,0 +1,153 @@
+<?php
+session_start();
+
+$user_id = $_SESSION['user_id'] ?? null;
+
+if (!$user_id) {
+    header("Location: ../login.php");
+    exit();
+}
+
+include '../connection/conn.php';
+
+$user_profile = [];
+if ($user_id) {
+    $stmt = $conn->prepare("SELECT * FROM update_profile WHERE user_id = ?");
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user_profile = $result->fetch_assoc();
+    $stmt->close();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_id) {
+    $username = $_POST['username'];
+    $age = $_POST['age'];
+    $address = $_POST['address'];
+    $birthday = $_POST['birthday'];
+    $phone_number = $_POST['phone_number'];
+
+    $image = $user_profile['image'] ?? '';
+    if (isset($_FILES['image']) && $_FILES['image']['size'] > 0) {
+        $image = $_FILES['image']['name'];
+        $target_dir = "../uploads/images/";
+        $target_file = $target_dir . basename($image);
+        move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+    }
+
+    if ($user_profile) {
+        $stmt = $conn->prepare("UPDATE update_profile SET username = ?, age = ?, address = ?, birthday = ?, phone_number = ?, image = ? WHERE user_id = ?");
+        $stmt->bind_param("sisssss", $username, $age, $address, $birthday, $phone_number, $image, $user_id);
+    } else {
+        $stmt = $conn->prepare("INSERT INTO update_profile (user_id, username, age, address, birthday, phone_number, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssissss", $user_id, $username, $age, $address, $birthday, $phone_number, $image);
+    }
+
+    if ($stmt->execute()) {
+        // Update the `users` table with the new username
+        $update_user_stmt = $conn->prepare("UPDATE users SET username = ? WHERE user_id = ?");
+        $update_user_stmt->bind_param("ss", $username, $user_id);
+        $update_user_stmt->execute();
+
+        // Update the session data
+        $_SESSION['username'] = $username;
+
+        // Pass the success message to JavaScript
+        echo "<script>
+                var showToastMessage = {
+                    success: 'Profile updated successfully!'
+                };
+              </script>";
+
+        // Redirect after 3 seconds to allow toast to be shown
+        echo "<script>
+                setTimeout(function() {
+                    window.location.href = '../dashboard/?page=inbox';
+                }, 3000); 
+              </script>";
+    } else {
+        echo "<script>
+        var showToastMessage = {
+            error: 'Error updating profile.'
+        };
+      </script>";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+<?php include('../dashboard/header.php'); ?>
+
+<style>
+    /* Loading Screen Styles */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: white;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #fff;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+</style>
+<!-- Loading Screen HTML -->
+<div id="loadingScreen" class="loading-screen">
+    <div class="spinner"></div>
+    <p>Processing...</p>
+</div>
+
+<div class="toast-container">
+    <!-- SUCCESS TOAST -->
+    <div class="toast valid-toast" id="validMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+        <i class="fa fa-check-circle-o valid-icon" aria-hidden="true"></i>
+        <div class="toast-body valid-toast-body"></div>
+    </div>
+
+    <!-- WARNING TOAST -->
+    <div class="toast warning-toast" id="warningMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+        <i class="fa fa-exclamation-triangle warning-icon" aria-hidden="true"></i>
+        <div class="toast-body warning-toast-body"></div>
+    </div>
+
+    <!-- ERROR TOAST -->
+    <div class="toast invalid-toast" id="invalidMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+        <i class="fa fa-times-circle-o invalid-icon"></i>
+        <div class="toast-body invalid-toast-body"></div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="../assets/JQUERY/jquery-3.7.1.min.js"></script>
+<!-- Include Bootstrap JS for toasts -->
+<script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/updateProfileValidation.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Show loading screen on form submission
+    $('form').on('submit', function() {
+        $('#loadingScreen').show();  // Show the loading screen
+    });
+});
+</script>

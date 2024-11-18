@@ -1,0 +1,27 @@
+
+CREATE TABLE account(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    account_id VARCHAR(10) UNIQUE,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'active',
+    role VARCHAR(50) DEFAULT ('user'),
+    last_login TIMESTAMP
+);
+
+DELIMITER $$
+
+CREATE TRIGGER before_insert_account_id
+BEFORE INSERT ON accounts
+FOR EACH ROW
+BEGIN
+	DECLARE next_id INT;
+    SELECT IFNULL(MAX(CAST(SUBSTRING(account_id, 4)AS UNSIGNED)), 0) + 1 INTO next_id
+    FROM accounts;
+    
+   SET NEW.account_id = CONCAT('acc', next_id);
+   END;
+   $$
