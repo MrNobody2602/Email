@@ -192,6 +192,23 @@ $conn->close();
                                 <label>Address</label>
                                 <input type="text" class="form-control" name="address" value="<?= $user_profile['address'] ?? '' ?>" required>
                             </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label>Current Password</label>
+                                    <input type="password" class="form-control" name="current_password" id="currentPassword" required>
+                                    <span class="toggle-password">
+                                        <i class="fas fa-eye" id="toggleCurrentPassword" style="cursor: pointer;"></i>
+                                    </span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label>New Password</label>
+                                    <input type="password" class="form-control" name="new_password" id="newPassword" required>
+                                    <span class="toggle-password">
+                                        <i class="fas fa-eye" id="toggleNewPassword" style="cursor: pointer;"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
