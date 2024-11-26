@@ -2,7 +2,7 @@
 <body>
     <div class="container">
         <div class="row global">
-            <div class="col-md-6 registration-card">
+            <div class="col-md-4 registration-card">
                 <h1 class="sign-in-title">SIGN UP</h1>
                 <form id="registrationForm" method="POST" novalidate>
                     <div class="input-container">

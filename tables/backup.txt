@@ -151,3 +151,189 @@ $(document).ready(function() {
     });
 });
 </script>
+
+
+
+
+// INBOX WEBSOCKET
+<!-- <script>
+        const socket = new WebSocket('ws://localhost:8081/emailing');
+
+        socket.onopen = function(event) {
+            console.log("Connected to WebSocket server.");
+        };
+
+        socket.onmessage = function(event) {
+            const newEmail = JSON.parse(event.data);
+            console.log("New message received:", newEmail);
+
+            const noEmailsRow = document.querySelector("#inbox-table tbody tr td[colspan='6']");
+            if (noEmailsRow) {
+                noEmailsRow.parentElement.remove();
+            }
+
+            const table = document.querySelector("#inbox-table tbody");
+            const newRow = document.createElement('tr');
+            const emailData = JSON.stringify(newEmail);
+
+            newRow.classList.add('view-emailDetails');
+            if (!newEmail.read_status) {
+                newRow.classList.add('glowing-border');
+            }
+            newRow.setAttribute('data-email', emailData);
+
+            newRow.innerHTML = `
+                <td>${newEmail.sender}</td>
+                <td>${newEmail.subject}</td>
+                <td class='message-cell'>${newEmail.message}</td>
+                <td>${newEmail.created_at}</td>
+                <td>${newEmail.read_status ? 'Read' : 'Unread'}</td>
+            `;
+
+            table.prepend(newRow);
+
+            newRow.addEventListener("click", function () {
+                const dataAttribute = newRow.getAttribute("data-email");
+                if (!dataAttribute) {
+                    console.error("Missing data-email attribute");
+                    return;
+                }
+
+                const emailData = JSON.parse(dataAttribute);
+
+                document.getElementById("modal-sender").textContent = emailData.sender_email;
+                document.getElementById("modal-subject").textContent = emailData.subject;
+                document.getElementById("modal-message").textContent = emailData.message;
+                document.getElementById("modal-date").textContent = emailData.created_at;
+
+                // Show the modal
+                emailModal.show();
+
+                if (newRow.classList.contains('glowing-border')) {
+                    markEmailAsRead(emailData.id, newRow);
+                }
+            });
+        };
+        
+        socket.onclose = function(event) {
+            console.log("Disconnected from WebSocket server.");
+        };
+
+        socket.onerror = function(error){
+            console.log("Websocket error:", error);
+        }
+    </script> -->
+
+    //INDE BOTTOM NAVBAR
+            <!-- Bottom Navigation Bar -->
+<nav class="bottom-navbar">
+    <a href="?page=compose" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'compose') ? 'active' : ''; ?>">
+        <i class="fa-solid fa-pen"></i>
+        <span>Compose</span>
+    </a>
+    <a href="?page=inbox" class="nav-item <?php echo (!isset($_GET['page']) || $_GET['page'] === 'inbox') ? 'active' : ''; ?>">
+        <i class="fa-solid fa-inbox"></i>
+        <span>Inbox</span>
+    </a>
+    <a href="?page=sent" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'sent') ? 'active' : ''; ?>">
+        <i class="fa-solid fa-paper-plane"></i>
+        <span>Sent</span>
+    </a>
+    <a href="?page=drafts" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'drafts') ? 'active' : ''; ?>">
+        <i class="fa-solid fa-file-alt"></i>
+        <span>Drafts</span>
+    </a>
+    <a href="?page=trash" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'trash') ? 'active' : ''; ?>">
+        <i class="fa-solid fa-trash"></i>
+        <span>Trash</span>
+    </a>
+</nav>
+
+<style>
+/* Fancy Glassmorphic Bottom Navbar */
+.bottom-navbar {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.bottom-navbar:hover {
+    transform: translateX(-50%) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    flex: 1;
+    transition: all 0.3s ease;
+    padding: 10px 0;
+}
+
+.nav-item i {
+    font-size: 22px;
+    margin-bottom: 5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-item span {
+    font-size: 12px;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+    color: #4A90E2;
+    transform: translateY(-5px);
+}
+
+.nav-item:hover i {
+    color: #4A90E2;
+    transform: scale(1.2);
+}
+
+.nav-item.active {
+    color: #4A90E2;
+    font-weight: bold;
+}
+
+.nav-item.active i {
+    color: #4A90E2;
+    font-size: 24px;
+}
+
+/* Mobile-Friendly Adjustments */
+@media (max-width: 480px) {
+    .bottom-navbar {
+        padding: 8px 15px;
+    }
+
+    .nav-item i {
+        font-size: 20px;
+    }
+
+    .nav-item span {
+        font-size: 10px;
+    }
+}
+
+</style>

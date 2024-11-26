@@ -2,6 +2,7 @@ $(document).ready(function(){
     $('#composeForm').on('submit', function(e){
         e.preventDefault();
 
+        const sender = $('#sender').val().trim();
         const recipient = $('#recipient').val().trim();
         const subject = $('#subject').val().trim();
         const message = $('#compMessage').val().trim();
@@ -13,6 +14,9 @@ $(document).ready(function(){
             return;
         } else if (!validateEmail(recipient)) {
             showToast('warningMessage', "The recipient's email is not valid");
+            return;
+        } else if (recipient == sender){
+            showToast('invalidMessage', 'You cannot send a message to yourself');
             return;
         }
 
@@ -34,7 +38,7 @@ $(document).ready(function(){
                 data: formData,
                 contentType: false,
                 processData: false,
-                timeout: 5000,
+                timeout: 3000,
                 success: function(response) {
                     $('#loadingScreen').addClass('d-none'); 
                     if (response.includes('Email sent successfully!')) {

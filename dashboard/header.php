@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="School Purposes Only! Send an email here now!">
-    <title>Emailing Dashboard</title>
+    <title>Quantamail</title>
     <link rel="icon" href="../assets/image/quantamail.png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">

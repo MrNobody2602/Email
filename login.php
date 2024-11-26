@@ -43,7 +43,6 @@
                     © 2024 BSIT-41A. All Rights Reserved.
                 </footer>
                 </form>
-                
             </div>
         </div>
     </div>

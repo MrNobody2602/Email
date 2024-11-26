@@ -1,12 +1,12 @@
 <div class="pages__title">
-    <h1>NEW MESSAGE</h1>
+    <h3>NEW MESSAGE</h3>
 </div>
 
     <div class="compose-container">
         <form action="" class="composeForm" id="composeForm" method="post" enctype="multipart/form-data" novalidate>
             <div class="input-group">
                 <label for="sender">Sender:</label>
-                <input name="sender" class="sender-input" value="<?php echo isset($sender_email) ? $sender_email : ''; ?>" readonly>
+                <input name="sender" class="sender-input" id="sender" value="<?php echo isset($sender_email) ? $sender_email : ''; ?>" readonly>
                 
                 <label for="recipient">Recipients Email:</label>
                 <input type="email" name="recipient" class="recipient-input" id="recipient" required>
@@ -37,7 +37,7 @@
                     <div class="file-upload-box">
                         <span class="badge badge-counter" id="document-count">0</span>
                         <label for="document-upload" class="file-upload-label">
-                            <img src="../assets/svg/document.svg" alt="Document File"> File
+                            <img src="../assets/svg/document.svg" alt="Document File"> Docs
                         </label>
                         <input type="file" id="document-upload" name="document[]" accept=".pdf,.doc,.docx,.txt,.xls,.xlsx,.ppt,.pptx,.ai,.indd,.psd" multiple>
                     </div>
@@ -62,20 +62,17 @@
 
         <div class="toast-container">
             <!-- SUCCESS TOAST -->
-            <div class="toast valid-toast" id="validMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
-                <i class="fa fa-check-circle-o valid-icon" aria-hidden="true"></i>
+            <div class="toast valid-toast" id="validMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">    
                 <div class="toast-body valid-toast-body"></div>
             </div>
 
             <!-- WARNING TOAST -->
             <div class="toast warning-toast" id="warningMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
-                <i class="fa fa-exclamation-triangle warning-icon" aria-hidden="true"></i>
                 <div class="toast-body warning-toast-body"></div>
             </div>
 
             <!-- ERROR TOAST -->
             <div class="toast invalid-toast" id="invalidMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
-                <i class="fa fa-times-circle-o invalid-icon"></i>
                 <div class="toast-body invalid-toast-body"></div>
             </div>
         </div>

@@ -46,7 +46,7 @@ $conn->close();
 
 <body>
     <main class="navbar">
-    <div class="container-fluid">
+        <div class="container-fluid">
             <div class="topnav-title">
                 <i class="fa-regular fa-envelope"></i>
                 <span class="QM-title">QuantaMail</span>
@@ -88,115 +88,99 @@ $conn->close();
         </div>
     </main>
 
-    <div class="container-fluid d-flex main-sidebar-container">
-        <!-- Sidebar -->
-        <nav class="sidebar">
-            <span class="expand-btn"><i class="fa-solid fa-bars"></i></span>
-            <div class="sidebar-links">
-                <ul>
-                    <li>
-                        <a href="?page=compose" title="Compose mail">
-                            <div class="icon">
-                                <img src="../assets/svg/compose.svg" title="Compose Icon">
-                                <span class="link hide">Compose</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="?page=inbox" class="active" title="Messages">
-                            <div class="icon">
-                                <img src="../assets/svg/inbox.svg" title="Inbox Icon">
-                            </div>
-                            <span class="link hide">Inbox</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="?page=sent" title="Sent Mails">
-                            <div class="icon">
-                                <img src="../assets/svg/sent.svg" title="Sent Icon">
-                            </div>
-                        <span class="link hide">Sent</span>
-                        </a>
-                    </li>   
-                    <li>
-                        <a href="?page=drafts" title="Draft Mails">
-                            <div class="icon">
-                                <img src="../assets/svg/draft.svg" title="Drafts Icon">
-                            </div>
-                        <span class="link hide">Drafts</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="?page=starred" title="Starred Mails">
-                            <div class="icon">
-                                <img src="../assets/svg/starred.svg" title="Starred Icon">
-                            </div>
-                        <span class="link hide">Starred</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="?page=archive" title="Archived Mails">
-                            <div class="icon">
-                                <img src="../assets/svg/archive.svg" title="Archive Icon">
-                            </div>
-                        <span class="link hide">Archive</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="?page=trash" title="Trash Mails">
-                            <div class="icon">
-                                <img src="../assets/svg/trash.svg" title="Trash Icon">
-                            </div>
-                        <span class="link hide">Trash</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    
+    <div class="container-fluid d-flex">
         <!-- EDIT PROFILE Modal -->
         <div class="modal fade" id="editProfileModal" tabindex="-1">
             <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="../dashboardFunctions/update_profile.php" method="POST" enctype="multipart/form-data">
-                        <div class="modal-header">
-                            <h5 class="modal-title"><?php echo isset($sender_email) ? $sender_email : ''; ?></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-content" id="modalContent">
+                    <form action="../dashboardFunctions/update_profile.php" id="updateProfileForm" method="POST" enctype="multipart/form-data">
+                        <div class="modal-header" id="modalHeader">
+                            <p class="profileModalTitle"><?php echo isset($sender_email) ? $sender_email : ''; ?></p>
+                            <button type="button" class="btn-close profileButtonClose" data-bs-dismiss="modal"></button>
                         </div>
-                        <div class="modal-body">
-                            <div class="mb-3 text-center">
-                                <img id="previewImage" src="<?= isset($user_profile['image']) ? '../uploads/images/' . $user_profile['image'] : '' ?>" class="rounded-circle" width="100">
-                                <input type="file" class="form-control mt-3" name="image" id="image" accept="image/*" onchange="previewFile()">
+                        <div class="modal-body" id="modalBody">
+                            <div class="mb-3 position-relative text-center">
+                                <img id="previewImage" src="<?= isset($user_profile['image']) ? '../uploads/images/' . $user_profile['image'] : '' ?>" 
+                                    class="rounded-circle profile-image" width="100" height="100" style="object-fit: cover; border: 1px solid #fff">
+                                <label for="image" class="position-absolute edit-button" style="bottom: 0; right: 190px; cursor: pointer;">
+                                    <img src="../assets/svg/pen-edit.svg" alt="edit profile" title="change image" width="24" height="24">
+                                </label>
+                                <input type="file" class="d-none" name="image" id="image" accept="image/*" onchange="previewFile()">
                             </div>
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>Username</label>
-                                    <input type="text" class="form-control" name="username" value="<?= $_SESSION['username'] ?? $user_profile['username'] ?? '' ?>" required>
+                                <div class="col-md-4 mb-3">
+                                    <label class="editProfileModal">Username</label>
+                                    <input type="text" class="form-control editProfileInput" name="username" value="<?= $_SESSION['username'] ?? $user_profile['username'] ?? '' ?>">
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Phone Number</label>
-                                    <input type="text" class="form-control" name="phone_number" value="<?= $user_profile['phone_number'] ?? '' ?>" required>
+                                <div class="col-md-4 mb-3">     
+                                    <label class="editProfileModal">Firstname</label>
+                                    <input type="text" class="form-control editProfileInput" name="firstname" value="<?= $user_profile['firstname'] ?? '' ?>">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="editProfileModal">Lastname</label>
+                                    <input type="text" class="form-control editProfileInput" name="lastname" value="<?= $user_profile['lastname'] ?? '' ?>">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>Age</label>
-                                    <input type="number" class="form-control" name="age" value="<?= $user_profile['age'] ?? '' ?>" required>
+                                <div class="col-md-4 mb-3">
+                                    <label class="editProfileModal">Phone Number</label>
+                                    <input type="number" class="form-control editProfileInput" name="phone_number" value="<?= $user_profile['phone_number'] ?? '' ?>">
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Birthday</label>
-                                    <input type="date" class="form-control" name="birthday" value="<?= $user_profile['birthday'] ?? '' ?>" required>
+                                <div class="col-md-4 mb-3">
+                                    <label class="editProfileModal">Age</label>
+                                    <input type="number" class="form-control editProfileInput" name="age" value="<?= $user_profile['age'] ?? '' ?>">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="editProfileModal">Birthday</label>
+                                    <input type="date" format="YYYY-MM-DD" class="form-control datepicker-input" name="birthday" value="<?= $user_profile['birthday'] ?? '' ?>">
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label>Address</label>
-                                <input type="text" class="form-control" name="address" value="<?= $user_profile['address'] ?? '' ?>" required>
+                                <label class="editProfileModal">Address</label>
+                                <input type="text" class="form-control editProfileInput" name="address" value="<?= $user_profile['address'] ?? '' ?>">
+                            </div>
+                            <hr class="editProfileDivider">
+                            <div class="row">
+                                <div class="col-md-6 mb-3 position-relative">
+                                    <label class="editProfileModal">Current Password</label>
+                                    <input type="password" class="form-control editProfileInput" name="current_password" id="currentPassword">
+                                    <span class="toggle-password">
+                                        <i class="fas fa-eye editProfileToggle" id="toggleCurrentPassword" style="cursor: pointer;"></i>
+                                    </span>
+                                </div>
+                                <div class="col-md-6 mb-3 position-relative">
+                                    <label class="editProfileModal">New Password</label>
+                                    <input type="password" class="form-control editProfileInput" name="new_password" id="newPassword">
+                                    <span class="toggle-password">
+                                        <i class="fas fa-eye editProfileToggle" id="toggleNewPassword" style="cursor: pointer;"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div class="editProfileFooter">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>
+
+                    <div class="toast-container">
+                        <!-- SUCCESS TOAST -->
+                        <div class="toast valid-toast" id="validProfileMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+                            <i class="fa fa-check-circle-o valid-icon" aria-hidden="true"></i>
+                            <div class="toast-body valid-toast-body"></div>
+                        </div>
+
+                        <!-- WARNING TOAST -->
+                        <div class="toast warning-toast" id="warningProfileMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+                            <i class="fa fa-exclamation-triangle warning-icon" aria-hidden="true"></i>
+                            <div class="toast-body warning-toast-body"></div>
+                        </div>
+
+                        <!-- ERROR TOAST -->
+                        <div class="toast invalid-toast" id="invalidProfileMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+                            <i class="fa fa-times-circle-o invalid-icon"></i>
+                            <div class="toast-body invalid-toast-body"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -225,9 +209,6 @@ $conn->close();
                     case 'archive':
                         include('Archive.php');
                         break;
-                    case 'spam':
-                        include('Spam.php');
-                        break;
                     case 'trash':
                         include('Trash.php');
                         break;
@@ -241,9 +222,43 @@ $conn->close();
             ?>
         </div>
     </div>
+
+    <nav class="bottom-navbar">
+        <a href="?page=compose" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'compose') ? 'active' : ''; ?>">
+            <i class="fa-solid fa-pen"></i>
+            <span>Compose</span>
+        </a>
+        <a href="?page=inbox" class="nav-item <?php echo (!isset($_GET['page']) || $_GET['page'] === 'inbox') ? 'active' : ''; ?>">
+            <i class="fa-solid fa-inbox"></i>
+            <span>Inbox</span>
+        </a>
+        <a href="?page=sent" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'sent') ? 'active' : ''; ?>">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>Sent</span>
+        </a>
+        <a href="?page=starred" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'sent') ? 'active' : ''; ?>">
+            <i class="fa-regular fa-bookmark"></i>
+            <span>Starred</span>
+        </a>
+        <a href="?page=archive" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'sent') ? 'active' : ''; ?>">
+            <i class="fa-solid fa-box-archive"></i>
+            <span>Archive</span>
+        </a>
+        <a href="?page=drafts" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'drafts') ? 'active' : ''; ?>">
+            <i class="fa-solid fa-file-alt"></i>
+            <span>Drafts</span>
+        </a>
+        <a href="?page=trash" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'trash') ? 'active' : ''; ?>">
+            <i class="fa-solid fa-trash"></i>
+            <span>Trash</span>
+        </a>
+    </nav>
+    <script src="../assets/JQUERY/jquery-3.7.1.min.js"></script>
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/sidebar.js"></script>
+    <script src="../assets/js/toggle_UpdatePassword.js"></script>
+    <script src="../assets/js/updateProfileValidation.js"></script>
     <script>
         function previewFile() {
             const preview = document.getElementById('previewImage');
