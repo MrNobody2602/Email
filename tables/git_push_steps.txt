@@ -1,0 +1,33 @@
+
+1. **Navigate to Your Project Folder**:
+   Open your terminal or Git Bash and go to your project folder.
+   ```bash
+   cd /path/to/your/project
+   ```
+
+2. **Check for Changes**:
+   To see which files have been modified, use the following command:
+   ```bash
+   git status
+   ```
+
+3. **Stage Your Changes**:
+   Add the updated files to the staging area. Use `.` to add all files, or specify individual files.
+   ```bash
+   git add .
+   ```
+
+4. **Commit the Changes**:
+   Write a commit message to describe your changes.
+   ```bash
+   git commit -m "Updated files with recent changes"
+   ```
+
+5. **Push the Changes to GitHub**:
+   Push your changes to the remote repository on GitHub. Replace `main` with your branch name if different.
+   ```bash
+   git push origin main
+   ```
+
+6. **Verify the Push**:
+   Go to your GitHub repository in the browser and confirm that the files are updated.
