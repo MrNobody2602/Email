@@ -1,3 +1,3 @@
 <div class="pages__title">
-    <h1>STARRED</h1>
+    <h3>STARRED</h3>
 </div>

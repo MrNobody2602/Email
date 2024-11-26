@@ -29,7 +29,7 @@ $conn->close();
 ?>
 
 <div class="pages__title">
-    <h1>SENT</h1>
+    <h3>SENT</h3>
 </div>
 
 <div class="container">

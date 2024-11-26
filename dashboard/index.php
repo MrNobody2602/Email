@@ -253,11 +253,11 @@ $conn->close();
             <i class="fa-solid fa-paper-plane"></i>
             <span>Sent</span>
         </a>
-        <a href="?page=starred" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'sent') ? 'active' : ''; ?>">
+        <a href="?page=starred" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'starred') ? 'active' : ''; ?>">
             <i class="fa-regular fa-bookmark"></i>
             <span>Starred</span>
         </a>
-        <a href="?page=archive" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'sent') ? 'active' : ''; ?>">
+        <a href="?page=archive" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'archive') ? 'active' : ''; ?>">
             <i class="fa-solid fa-box-archive"></i>
             <span>Archive</span>
         </a>
@@ -273,7 +273,6 @@ $conn->close();
     <script src="../assets/JQUERY/jquery-3.7.1.min.js"></script>
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/sidebar.js"></script>
     <script src="../assets/js/toggle_UpdatePassword.js"></script>
     <script src="../assets/js/updateProfileValidation.js"></script>
     <script>

@@ -1,3 +1,3 @@
 <div class="pages__title">
-    <h1>TRASH</h1>
+    <h3>TRASH</h3>
 </div>
