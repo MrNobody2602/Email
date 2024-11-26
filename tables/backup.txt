@@ -335,5 +335,28 @@ $(document).ready(function() {
         font-size: 10px;
     }
 }
-
 </style>
+
+index css
+/* .edit-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile-container:hover .edit-overlay {
+  opacity: 1;
+} */

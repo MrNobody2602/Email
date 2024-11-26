@@ -156,23 +156,6 @@ $conn->close();
                                     </span>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>Current Password</label>
-                                    <input type="password" class="form-control" name="current_password" id="currentPassword" required>
-                                    <span class="toggle-password">
-                                        <i class="fas fa-eye" id="toggleCurrentPassword" style="cursor: pointer;"></i>
-                                    </span>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>New Password</label>
-                                    <input type="password" class="form-control" name="new_password" id="newPassword" required>
-                                    <span class="toggle-password">
-                                        <i class="fas fa-eye" id="toggleNewPassword" style="cursor: pointer;"></i>
-                                    </span>
-                                </div>
-                            </div>
                         </div>
                         <div class="editProfileFooter">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -253,11 +236,11 @@ $conn->close();
             <i class="fa-solid fa-paper-plane"></i>
             <span>Sent</span>
         </a>
-        <a href="?page=starred" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'starred') ? 'active' : ''; ?>">
+        <a href="?page=starred" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'sent') ? 'active' : ''; ?>">
             <i class="fa-regular fa-bookmark"></i>
             <span>Starred</span>
         </a>
-        <a href="?page=archive" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'archive') ? 'active' : ''; ?>">
+        <a href="?page=archive" class="nav-item <?php echo (isset($_GET['page']) && $_GET['page'] === 'sent') ? 'active' : ''; ?>">
             <i class="fa-solid fa-box-archive"></i>
             <span>Archive</span>
         </a>
@@ -273,6 +256,7 @@ $conn->close();
     <script src="../assets/JQUERY/jquery-3.7.1.min.js"></script>
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/profile_dropdown.js"></script>
     <script src="../assets/js/toggle_UpdatePassword.js"></script>
     <script src="../assets/js/updateProfileValidation.js"></script>
     <script>
