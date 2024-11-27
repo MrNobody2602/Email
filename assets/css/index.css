@@ -849,30 +849,42 @@ body{
   max-width: 100%;
 }
 
+/* Table Wrapper with Glassmorphism */
 .table-wrapper {
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  width: 100%;
+  max-width: 1200px;
+  transition: all 0.3s ease;
 }
 
+/* Table Responsiveness */
 .table-responsive {
-  max-height: 390px;
+  max-height: 300px;
   overflow-y: auto;
 }
 
+/* Table Design */
 .table {
   width: 100%;
-  margin-bottom: 0;
   border-collapse: collapse;
+  margin: 0;
 }
 
 .table thead th {
-  background-color: #007bff;
+  background: rgba(0, 123, 255, 0.8);
   color: white;
+  font-weight: bold;
+  padding: 15px;
   position: sticky;
   top: 0;
   z-index: 10;
-  padding: 10px;
 }
 
 .table tbody tr {
@@ -880,7 +892,7 @@ body{
 }
 
 .table tbody tr:hover {
-  background-color: #f1f1f1;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .table td,
@@ -888,56 +900,80 @@ body{
   padding: 12px;
   text-align: left;
   vertical-align: middle;
-  border-bottom: 1px solid #ddd;
-}
-
-.table td {
   color: var(--darker);
-  font-weight: 500;
   word-wrap: break-word;
-  max-width: 200px;
 }
 
-.table td.message-cell{
+.table td.message-cell {
   max-width: 300px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.no-data {
-  text-align: center;
-  color: #888;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-::-webkit-scrollbar-thumb {
-  background: #888; 
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--dark-gray); 
-}
-
-
+/* Glowing Border for Unread Messages */
 .glowing-border {
   animation: glow 5s ease-in-out infinite alternate;
-  border: 2px solid var(--green);
+  border: 2px solid rgba(0, 255, 0, 0.5);
   border-radius: 10px;
 }
 
 @keyframes glow {
   from {
-      box-shadow: 0 0 5px var(--green);
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
   }
   to {
-      box-shadow: 0 0 15px var(--green);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive Behavior */
+@media (max-width: 768px) {
+  .table-wrapper {
+    margin: 10px;
+    border-radius: 12px;
+  }
+
+  .table thead th,
+  .table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .table td.message-cell {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .table-wrapper {
+    border-radius: 8px;
+  }
+
+  .table thead th,
+  .table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .table td.message-cell {
+    max-width: 150px;
   }
 }

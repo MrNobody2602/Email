@@ -54,27 +54,25 @@ $conn->close();
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <?php 
-                        if ($email_result->num_rows > 0) {
-                            while ($email_row = $email_result->fetch_assoc()) {
-                                $emailData = htmlspecialchars(json_encode($email_row));
-                                $glowClass = $email_row['read_status'] ? '' : 'glowing-border';
-                                echo "<tr class='view-emailDetails $glowClass' data-email='$emailData'>
-                                        <td>" . htmlspecialchars($email_row['sender_email']) . "</td>
-                                        <td>" . htmlspecialchars($email_row['subject']) . "</td>
-                                        <td class='message-cell'>" . htmlspecialchars($email_row['message']) . "</td>
-                                        <td>" . htmlspecialchars($email_row['created_at']) . "</td>
-                                        <td>" . ($email_row['read_status'] ? 'Read' : 'Unread') . "</td>
-                                    </tr>";
+                        <?php 
+                            if ($email_result->num_rows > 0) {
+                                while ($email_row = $email_result->fetch_assoc()) {
+                                    $emailData = htmlspecialchars(json_encode($email_row));
+                                    $glowClass = $email_row['read_status'] ? '' : 'glowing-border';
+                                    echo "<tr class='view-emailDetails $glowClass' data-email='$emailData'>
+                                            <td>" . htmlspecialchars($email_row['sender_email']) . "</td>
+                                            <td>" . htmlspecialchars($email_row['subject']) . "</td>
+                                            <td class='message-cell'>" . htmlspecialchars($email_row['message']) . "</td>
+                                            <td>" . htmlspecialchars($email_row['created_at']) . "</td>
+                                            <td>" . ($email_row['read_status'] ? 'Read' : 'Unread') . "</td>
+                                        </tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='6'>No emails found for this recipient.</td></tr>";
                             }
-                        } else {
-                            echo "<tr><td colspan='6'>No emails found for this recipient.</td></tr>";
-                        }
 
-                        $email_stmt->close();
-                    ?>
-                    </tr>
+                            $email_stmt->close();
+                        ?>
                 </tbody>
             </table>
         </div>

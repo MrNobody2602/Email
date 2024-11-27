@@ -47,22 +47,22 @@ $conn->close();
                 </thead>
                 <tbody>
                     <?php 
-                    if ($email_result->num_rows > 0) {
-                        while ($email_row = $email_result->fetch_assoc()) {
-                            $emailData = htmlspecialchars(json_encode($email_row));
-                            echo "<tr class='view-emailDetails' data-email='$emailData'>
-                                    <td>" . htmlspecialchars($email_row['recipient_email']) . "</td>
-                                    <td>" . htmlspecialchars($email_row['subject']) . "</td>
-                                    <td class='message-cell'>" . htmlspecialchars($email_row['message']) . "</td>
-                                    <td>" . htmlspecialchars($email_row['created_at']) . "</td>
-                                    <td>" . ($email_row['read_status'] ? 'Read' : 'Unread') . "</td>
-                                </tr>";
+                        if ($email_result->num_rows > 0) {
+                            while ($email_row = $email_result->fetch_assoc()) {
+                                $emailData = htmlspecialchars(json_encode($email_row));
+                                echo "<tr class='view-emailDetails' data-email='$emailData'>
+                                        <td>" . htmlspecialchars($email_row['recipient_email']) . "</td>
+                                        <td>" . htmlspecialchars($email_row['subject']) . "</td>
+                                        <td class='message-cell'>" . htmlspecialchars($email_row['message']) . "</td>
+                                        <td>" . htmlspecialchars($email_row['created_at']) . "</td>
+                                        <td>" . ($email_row['read_status'] ? 'Read' : 'Unread') . "</td>
+                                    </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>No sent emails found.</td></tr>";
                         }
-                    } else {
-                        echo "<tr><td colspan='5'>No sent emails found.</td></tr>";
-                    }
 
-                    $email_stmt->close();
+                        $email_stmt->close();
                     ?>
                 </tbody>
             </table>
