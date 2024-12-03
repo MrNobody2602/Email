@@ -51,7 +51,7 @@ $conn->close();
                             while ($email_row = $email_result->fetch_assoc()) {
                                 $emailData = htmlspecialchars(json_encode($email_row));
                                 echo "<tr class='view-emailDetails' data-email='$emailData'>
-                                        <td>" . htmlspecialchars($email_row['recipient_email']) . "</td>
+                                        <td class='sender-cell'>" . htmlspecialchars($email_row['recipient_email']) . "</td>
                                         <td>" . htmlspecialchars($email_row['subject']) . "</td>
                                         <td class='message-cell'>" . htmlspecialchars($email_row['message']) . "</td>
                                         <td>" . htmlspecialchars($email_row['created_at']) . "</td>

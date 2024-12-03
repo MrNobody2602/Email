@@ -518,7 +518,7 @@ body{
   color: #555;
 }
 
-/* BOTTOM NAVBAR */
+/* BOTTOM NAVBAR {black,0} */
 .bottom-navbar {
   position: fixed;
   bottom: 15px;
@@ -809,7 +809,6 @@ body{
   transform: rotate(45deg);
 }
 
-/* Media query for smaller screens {black, 0}*/
 @media (max-width: 768px) {
   .input-group, .message-group {
       width: 100%;
@@ -833,7 +832,7 @@ body{
 }
 
 .message-cell {
-  max-width: 300px;
+  max-width: 250px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -849,7 +848,7 @@ body{
   max-width: 100%;
 }
 
-/* Table Wrapper with Glassmorphism */
+/* Table Wrapper with Glassmorphism {black,0}*/
 .table-wrapper {
   border-radius: 16px;
   overflow: hidden;
@@ -864,13 +863,11 @@ body{
   transition: all 0.3s ease;
 }
 
-/* Table Responsiveness */
 .table-responsive {
   max-height: 300px;
   overflow-y: auto;
 }
 
-/* Table Design */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -911,7 +908,73 @@ body{
   text-overflow: ellipsis;
 }
 
-/* Glowing Border for Unread Messages */
+/* ACTION ICONS STYLING {black, 0} */
+.table-hover tr {
+  position: relative;
+}
+
+.action-icons {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s, opacity 0.2s ease-in-out;
+  display: flex;
+  gap: 15px;
+  background: none;
+}
+
+.table-hover tr:hover .action-icons {
+  visibility: visible;
+  opacity: 1;
+}
+
+.icon {
+  font-size: 16px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.favorite {
+  position: relative;
+  left: 10px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.favorite:hover {
+  color: gold;
+}
+
+.delete-all-container .delete-all:hover,
+.delete-icon:hover {
+  color: red;
+}
+
+.delete-all-container .archive-all:hover,
+.archive-icon:hover {
+  color: green;
+}
+
+.delete-all-container {
+  display: none;
+  float: left;
+}
+
+.delete-all-container button {
+  padding: 5px 10px;
+  border: none;
+  color: #888;
+  font-weight: bold;
+  cursor: pointer;
+  background: none;
+}
+
+/* Glowing Border for Unread Messages {black,0}*/
 .glowing-border {
   animation: glow 5s ease-in-out infinite alternate;
   border: 2px solid rgba(0, 255, 0, 0.5);
@@ -927,7 +990,7 @@ body{
   }
 }
 
-/* Scrollbar Styling */
+/* Scrollbar Styling {black, 0}*/
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -944,11 +1007,12 @@ body{
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Responsive Behavior */
 @media (max-width: 768px) {
   .table-wrapper {
-    margin: 10px;
+    margin: 0 auto;
     border-radius: 12px;
+    width: 100%;
+    max-width: 700px !important;
   }
 
   .table thead th,
@@ -957,8 +1021,18 @@ body{
     font-size: 14px;
   }
 
+  .table td.sender-cell,
   .table td.message-cell {
-    max-width: 200px;
+    max-width: 100px;
+  }
+
+  .favorite{
+    position: relative;
+    left: 0;
+  }
+
+  .action-icons:hover{
+    background: none !important;
   }
 }
 
@@ -973,7 +1047,12 @@ body{
     padding: 8px;
   }
 
+  .table td.sender-cell,
   .table td.message-cell {
-    max-width: 150px;
+    max-width: 100px;
+  }
+
+  .action-icons{
+    background: none ;
   }
 }

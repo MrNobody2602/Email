@@ -1,19 +1,16 @@
 <?php
+date_default_timezone_set('Asia/Manila');
 require '../connection/conn.php';
 require __DIR__ . '/../vendor/autoload.php';
 
 use WebSocket\Client;
 
-// error_log("Send Email PHP SCRIPT STARTED");
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
     $sender_email = $_POST['sender'];
     $recipient_email = $_POST['recipient'];
     $subject = $_POST['subject'];
     $message = $_POST['message'];
 
-    // Check if recipient email exists in the database
     $sql_check_recipient = "SELECT * FROM users WHERE email = ?";
     $stmt_check_recipient = $conn->prepare($sql_check_recipient);
     $stmt_check_recipient->bind_param("s", $recipient_email);
@@ -25,8 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    $message_id = 'QM_MSG' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+
     $image_uploads = [];
     $document_uploads = [];
+    $video_upload = null;
 
     // Handle image uploads
     $image_uploads = [];
@@ -79,29 +79,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-    // Prepare JSON strings from the arrays
+
     $image_uploads_json = json_encode($image_uploads);
     $document_uploads_json = json_encode($document_uploads);
 
-    // Prepare SQL statement to insert data into the database
-    $sql = "INSERT INTO emails (sender_email, recipient_email, subject, message, image_uploads, video_upload, document_uploads)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
-
+    $sql = "INSERT INTO emails (message_id, sender_email, recipient_email, subject, message, image_uploads, video_upload, document_uploads)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-
-    // Check if prepare was successful
-    if ($stmt === false) { 
-        die("MySQL prepare error: " . $conn->error);
-    }
-
-    // Bind parameters
-    $stmt->bind_param("sssssss", $sender_email, $recipient_email, $subject, $message, 
-                    $image_uploads_json, $video_upload, $document_uploads_json);
+    $stmt->bind_param("ssssssss", $message_id, $sender_email, $recipient_email, $subject, $message, 
+                      $image_uploads_json, $video_upload, $document_uploads_json);
 
     if ($stmt->execute()) {
         echo "Email sent successfully!";
-
+        
         $notificationData = [
+            'message_id' => $message_id,
             'sender' => $sender_email,
             'recipient' => $recipient_email,
             'subject' => $subject,
@@ -118,10 +110,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $client->send($msg);
             $client->close();
         } catch (Exception $e) {
-            echo "Failed to send notification: " . $e->getMessage();
+            error_log("WebSocket Error: " . $e->getMessage());
         }
     } else {
-        echo "Error: " . $stmt->error;
+        if ($conn->errno == 1062) {
+            echo "Duplicate message ID detected. Please retry.";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
     }
 
     $stmt->close();
