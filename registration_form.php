@@ -34,7 +34,7 @@
                         </span>
                     </div>  
                     <div>
-                        <a href="login.php" class="to-login">Do you have an account?</a>
+                        <a href="login.php" class="to-login">Do you have an account?<br>Proceed to login ↪</a>
                     </div>  
                     <div>
                         <button type="submit" class="register-btn">

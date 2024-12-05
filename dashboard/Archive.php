@@ -136,4 +136,5 @@ $conn->close();
 <script src="../assets/JQUERY/jquery-3.7.1.min.js"></script>
 <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/inboxModal.js"></script>
+<script src="../assets/js/actions.js"></script>
 <script src="../assets/page-action-js/archive_action.js"></script>

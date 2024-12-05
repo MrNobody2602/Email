@@ -87,7 +87,7 @@ $conn->close();
                                     </tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='6'>You're inbox is empty.</td></tr>";
+                            echo "<tr><td colspan='6'>Your inbox is empty.</td></tr>";
                         }
                         $email_stmt->close();
                     ?>

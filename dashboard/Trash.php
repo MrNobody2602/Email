@@ -45,6 +45,9 @@ $conn->close();
             <table class="table table-striped table-hover" id="trash-table">
                 <thead>
                     <tr>
+                        <th class="checkbox-favorite">
+                            <input type="checkbox" id="select-all">
+                        </th>
                         <th scope="col">Sender Email</th>
                         <th scope="col">Subject</th>
                         <th scope="col">Message</th>
@@ -57,6 +60,10 @@ $conn->close();
                         if ($email_result->num_rows > 0) {
                             while ($email_row = $email_result->fetch_assoc()) {
                                 echo "<tr>
+                                        <td class='checkbox-favorite'>
+                                            <input type='checkbox' class='row-checkbox'>
+                                            <span class='favorite'><i class='fas fa-star'></i></span>
+                                        </td>
                                         <td>" . htmlspecialchars($email_row['sender_email']) . "</td>
                                         <td>" . htmlspecialchars($email_row['subject']) . "</td>
                                         <td>" . htmlspecialchars($email_row['message']) . "</td>
@@ -73,7 +80,7 @@ $conn->close();
                                     </tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='6'>Trash is empty.</td></tr>";
+                            echo "<tr><td colspan='6'>Empty trash.</td></tr>";
                         }
                         $email_stmt->close();
                     ?>
@@ -126,4 +133,6 @@ $conn->close();
 </div>
 <script src="../assets/JQUERY/jquery-3.7.1.min.js"></script>
 <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/inboxModal.js"></script>
+<script src="../assets/js/actions.js"></script>
 <script src="../assets/page-action-js/trash_action.js"></script>

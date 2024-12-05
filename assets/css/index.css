@@ -21,6 +21,7 @@
   --green: #00FF00;
   --yellow: #FFFF00;
   --hover: #e9ecef;
+  --icon-color: #888;
 
   /* VALIDATIONS */
   --warning: #946e24;
@@ -930,8 +931,8 @@ body{
   border: none;
   cursor: pointer;
   padding: 0;
-  color: inherit;
-  font-size: 16px; /* Adjust size as needed */
+  color: var(--icon-color);
+  font-size: 16px;
 }
 
 .table-hover tr:hover .action-icons {
@@ -939,17 +940,10 @@ body{
   opacity: 1;
 }
 
-.icon {
-  font-size: 16px;
-  color: #888;
-  cursor: pointer;
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
 .favorite {
   position: relative;
   left: 10px;
-  color: #888;
+  color: var(--icon-color);
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -959,12 +953,12 @@ body{
 }
 
 .delete-all-container .delete-all:hover,
-.delete-icon:hover {
+.delete-button:hover {
   color: red;
 }
 
 .delete-all-container .archive-all:hover,
-.archive-icon:hover {
+.archive-button:hover {
   color: green;
 }
 
@@ -976,7 +970,7 @@ body{
 .delete-all-container button {
   padding: 5px 10px;
   border: none;
-  color: #888;
+  color: var(--icon-color);
   font-weight: bold;
   cursor: pointer;
   background: none;

@@ -68,12 +68,12 @@ $conn->close();
                                         <td>" . htmlspecialchars($email_row['created_at']) . "</td>
                                         <td>" . ($email_row['read_status'] ? 'Read' : 'Unread') . "</td>
                                         <td class='action-icons'>
-                                            <a href='archive.php?id=" . htmlspecialchars($email_row['id']) . "' title='Archive' class='icon archive-icon'>
+                                            <button class='icon icon-button archive-button' onclick='changeStatus(" . $email_row['id'] . ", \"archive\")'>
                                                 <i class='fa fa-archive'></i>
-                                            </a>
-                                            <a href='delete.php?id=" . htmlspecialchars($email_row['id']) . "' title='Delete' class='icon delete-icon'>
+                                            </button>
+                                            <button class='icon icon-button delete-button' onclick='changeStatus(" . $email_row['id'] . ", \"trash\")'>
                                                 <i class='fa fa-trash'></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>";
                             }
@@ -105,28 +105,34 @@ $conn->close();
             </div>
         </div>
     </div>
-</div>
+    <div class="toast-container">
+        <!-- SUCCESS TOAST -->
+        <div class="toast valid-toast" id="validMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <i class="fa fa-check-circle-o valid-icon" aria-hidden="true"></i>
+            <div class="toast-body valid-toast-body"></div>
+        </div>
 
+        <!-- WARNING TOAST -->
+        <div class="toast warning-toast" id="warningMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <i class="fa fa-exclamation-triangle warning-icon" aria-hidden="true"></i>
+            <div class="toast-body warning-toast-body"></div>
+        </div>
+
+        <!-- ERROR TOAST -->
+        <div class="toast invalid-toast" id="invalidMessage" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <i class="fa fa-times-circle-o invalid-icon"></i>
+            <div class="toast-body invalid-toast-body"></div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen d-none">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+<script src="../assets/JQUERY/jquery-3.7.1.min.js"></script>
 <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/sentModal.js"></script>
 <script src="../assets/js/actions.js"></script>
-<script>
-    // Ensure Bootstrap Modal is shown when clicking on a row
-    document.querySelectorAll('.view-emailDetails').forEach(row => {
-        row.addEventListener('click', function() {
-            const emailData = JSON.parse(this.getAttribute('data-email'));
-
-            // Fill in the modal with email details
-            document.getElementById('modal-recipient').textContent = emailData.recipient_email;
-            document.getElementById('modal-subject').textContent = emailData.subject;
-            document.getElementById('modal-message').textContent = emailData.message;
-            document.getElementById('modal-date').textContent = emailData.created_at;
-
-            // Show the modal using Bootstrap's modal methods
-            var emailModal = new bootstrap.Modal(document.getElementById('emailModal'));
-            emailModal.show(); // This will display the modal
-
-            // Optionally, you could mark the email as read here if needed
-        });
-    });
-</script>

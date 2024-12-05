@@ -19,7 +19,7 @@
                         </span>
                     </div>
                     <div>
-                        <a href="registration_form.php" class="to-login">Doesn't have an account?</a>
+                        <a href="registration_form.php" class="to-login">Doesn't have an account?<br>Go to registration ↪</a>
                         <button type="submit" class="register-btn">
                             <span class="span-mother">
                                 <span>s</span>
