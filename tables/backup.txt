@@ -544,3 +544,47 @@ index css
 
                             $email_stmt->close();
                         ?>
+
+RESTORE
+// restore.php
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login.php");
+    exit();
+}
+
+include '../connection/conn.php';
+
+$message_id = $_GET['id'];  // message_id to restore
+$user_id = $_SESSION['user_id'];
+
+// Fetch email details from the trash table
+$query = "SELECT * FROM trash WHERE message_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $message_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $email = $result->fetch_assoc();
+
+    // Insert email back into the emails table
+    $insert_query = "INSERT INTO emails (id, sender_email, recipient_email, subject, message, created_at, read_status)
+                     VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $insert_stmt = $conn->prepare($insert_query);
+    $insert_stmt->bind_param("isssssi", $email['message_id'], $email['sender_email'], $email['recipient_email'], $email['subject'], $email['message'], $email['created_at'], $email['read_status']);
+    $insert_stmt->execute();
+
+    // Delete the email from the trash table
+    $delete_query = "DELETE FROM trash WHERE message_id = ?";
+    $delete_stmt = $conn->prepare($delete_query);
+    $delete_stmt->bind_param("i", $message_id);
+    $delete_stmt->execute();
+
+    $conn->close();
+    header("Location: trash.php"); // Redirect to trash page or inbox
+} else {
+    echo "Email not found in trash.";
+}
+?>

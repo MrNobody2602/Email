@@ -923,7 +923,15 @@ body{
   transition: visibility 0.2s, opacity 0.2s ease-in-out;
   display: flex;
   gap: 15px;
+}
+
+.action-icons .icon {
   background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+  font-size: 16px; /* Adjust size as needed */
 }
 
 .table-hover tr:hover .action-icons {

@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Make sure sender_email is correctly accessed
         newRow.innerHTML = `
+            <td></td>
             <td>${newEmail.sender_email || newEmail.sender}</td>
             <td>${newEmail.subject}</td>
             <td class='message-cell'>${newEmail.message}</td>

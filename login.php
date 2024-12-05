@@ -77,13 +77,11 @@
 
     <!-- jQuery -->
     <script src="./assets/JQUERY/jquery-3.7.1.min.js"></script>
-
+    <!-- Bootstrap JS -->
+    <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Your Custom JS -->
     <script src="./assets/js/login_validation.js"></script>
     <script src="./assets/js/toggle_password.js"></script>
     <script src="./assets/js/script.js"></script>
-    
-    <!-- Bootstrap JS -->
-    <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
